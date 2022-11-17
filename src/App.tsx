@@ -23,7 +23,8 @@ const App = () => {
     3 insert rect
     4 insert arc
     5 insert image
-    6 drag canvas image
+    6 drag canvas
+    7 scale image
   */
   const removeCanvas = (id: string) => {
     document.getElementById(id)!.remove();
