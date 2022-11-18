@@ -17,7 +17,6 @@ const App = () => {
     image.src = imageSrc;
     const myCanvas = document.getElementById('mycanvas')! as HTMLCanvasElement;
     const ctx = myCanvas.getContext('2d')!;
-    ctx.imageSmoothingEnabled = true;
     image.onload = () => {
       const { width } = image;
       const widthPercentage = myCanvas.width / width;

@@ -1,13 +1,24 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import toast from 'react-hot-toast';
+import { BG_CANVAS_ID } from '../../../constants';
+import { getCanvasCtx } from '../../../utils';
 
 const BackgroundChooser = () => {
   const [src, setSrc] = useState('');
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (!acceptedFiles) return;
-    if (!acceptedFiles[0].type.includes('image')) return;
+    if (!acceptedFiles[0].type.includes('image')) {
+      toast('Image only', {
+        icon: '❗',
+      });
+      return;
+    }
     const imageSrc = URL.createObjectURL(acceptedFiles[0]);
     setSrc(imageSrc);
+    const image = new Image();
+    image.src = imageSrc;
+    const ctx = getCanvasCtx({ id: BG_CANVAS_ID });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

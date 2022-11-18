@@ -1,5 +1,5 @@
 import Toolbar from './components/organisms/Toolbar';
-import { canvasSize } from './contants';
+import { BG_CANVAS_ID, canvasSize } from './constants';
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
         className={`h-[${canvasSize.height}px] w-[${canvasSize.width}px] rounded-lg bg-neutral-content shadow`}
       >
         <canvas
-          id="backgroundCanvas"
+          id={BG_CANVAS_ID}
           height={canvasSize.height}
           width={canvasSize.width}
         />
