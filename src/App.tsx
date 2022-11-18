@@ -20,12 +20,19 @@ const App = () => {
     ctx.imageSmoothingEnabled = true;
     image.onload = () => {
       const { width } = image;
-      const diff = myCanvas.width / width;
+      const widthPercentage = myCanvas.width / width;
       const finalWidth = canvasFixedSize.width;
-      const finalHeight = image.height * diff;
-      console.log(myCanvas.width);
+      const finalHeight = image.height * widthPercentage;
+      let yCoordinate = 0;
+      if (finalHeight !== canvasFixedSize.height) {
+        const diff = canvasFixedSize.height - finalHeight;
+        yCoordinate = Math.abs(diff) / 2;
+        if (diff < 0) {
+          yCoordinate *= -1;
+        }
+      }
       ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-      ctx.drawImage(image, 0, 0, finalWidth, finalHeight);
+      ctx.drawImage(image, 0, yCoordinate, finalWidth, finalHeight);
     };
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
