@@ -19,15 +19,15 @@ const BackgroundChooser = () => {
       {src === '' ? (
         <div
           {...getRootProps()}
-          className="mt-1 rounded-lg border border-primary p-1 text-primary"
+          className="mt-1 cursor-pointer rounded-lg border border-primary p-1 text-primary duration-150 hover:bg-primary hover:text-primary-content"
         >
           <input {...getInputProps()} className="hidden" />
           {isDragActive ? (
-            <div className="flex cursor-pointer flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
               <i className="bi bi-file-image"></i>
             </div>
           ) : (
-            <div className="flex cursor-pointer flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
               <i className="bi bi-upload"></i>
             </div>
           )}
@@ -35,10 +35,10 @@ const BackgroundChooser = () => {
       ) : (
         <div className="relative h-10 w-full overflow-hidden rounded-lg">
           <button
-            className="absolute block h-full w-full bg-slate-200/0 duration-150 hover:bg-slate-200/80"
+            className="absolute block h-full w-full bg-error/0 duration-150 hover:bg-error/80"
             onClick={() => setSrc('')}
           >
-            <i className="bi bi-x-lg"></i>
+            <i className="bi bi-trash"></i>
           </button>
           <img src={src} alt="" className="block h-full w-full object-cover" />
         </div>
