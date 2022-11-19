@@ -22,6 +22,7 @@ const ShapeConfiguration = () => {
     });
   }, [selectedShape]);
 
+
   const handleChangeSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       currentTarget: { id, valueAsNumber },
@@ -56,6 +57,7 @@ const ShapeConfiguration = () => {
             value={newCoordinate.x}
             id="x"
             autoComplete="false"
+            step={10}
             onChange={handleChangeSelected}
           />
         </div>
@@ -68,6 +70,7 @@ const ShapeConfiguration = () => {
             value={newCoordinate.y}
             id="y"
             autoComplete="false"
+            step={10}
             onChange={handleChangeSelected}
           />
         </div>

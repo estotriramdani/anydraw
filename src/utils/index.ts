@@ -49,7 +49,8 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     params;
   const newCanvas = document.createElement('canvas') as HTMLCanvasElement;
   const id = params.id || Math.random().toString();
-  newCanvas.id = id;
+  // newCanvas.id = id;
+  newCanvas.className = 'shapes';
   newCanvas.height = canvasSize.height;
   newCanvas.width = canvasSize.width;
   newCanvas.style.position = 'absolute';
@@ -66,7 +67,7 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     ctx.rect(x || 10, y || 10, params.w || 200, params.h || 200);
     ctx.fill();
     if (strokeStyle) {
-      if (!isEditing) ctx.stroke();
+      ctx.stroke();
     }
   }
   return { id, newCanvas, params };
@@ -77,7 +78,6 @@ export const changeShapeProps = (params: {
   shapeData: CreateNewCanvas;
 }) => {
   const { canvasEl, shapeData } = params;
-  console.log(shapeData);
   if (shapeData.shapeType === 'rect') {
     const { x, y, w, h } = shapeData;
     const ctx = canvasEl.getContext('2d')!;

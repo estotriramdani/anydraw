@@ -29,9 +29,13 @@ export const ShapeContextProvider = ({ children }: { children: ReactNode }) => {
     const parentElement = document.getElementById(
       'parentElement'
     )! as HTMLDivElement;
+    const canvasShapes = document.getElementsByClassName('shapes');
+    for (let index = 0; index < canvasShapes.length; index++) {
+      const element = canvasShapes[index];
+      parentElement.removeChild(element);
+    }
     shapes.forEach((shape, index) => {
       parentElement.appendChild(shape.newCanvas);
-      // if (shapes.length - 1 === index) setSelectedShape(shape);
     });
   }, [shapes]);
 
