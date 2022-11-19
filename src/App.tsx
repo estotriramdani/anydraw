@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import AddedShapes from './components/organisms/AddedShapes';
 import Toolbar from './components/organisms/Toolbar';
 import { BG_CANVAS_ID, canvasSize } from './constants';
 import ShapeContext from './context/ShapeContext';
@@ -11,7 +12,7 @@ export default function App() {
       <Toolbar />
       <div
         id="parentElement"
-        className={`h-[${canvasSize.height}px] w-[${canvasSize.width}px] relative rounded-lg bg-neutral-content shadow-xl overflow-hidden`}
+        className={`h-[${canvasSize.height}px] w-[${canvasSize.width}px] relative overflow-hidden rounded-lg bg-neutral-content shadow-xl`}
       >
         <canvas
           id={BG_CANVAS_ID}
@@ -19,6 +20,7 @@ export default function App() {
           width={canvasSize.width}
         />
       </div>
+      <AddedShapes />
     </div>
   );
 }
