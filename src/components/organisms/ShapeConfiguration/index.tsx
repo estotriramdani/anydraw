@@ -1,45 +1,38 @@
 import { useContext, useEffect, useState } from 'react';
 import ShapeContext from '../../../context/ShapeContext';
-import { changeShapeProps, createNewCanvas } from '../../../utils';
+import { createNewCanvas } from '../../../utils';
 
 const Separator = () => {
   return <div className="h-full w-px bg-neutral-content" />;
 };
 
 const ShapeConfiguration = () => {
-  const { selectedShape, shapes, setShapes } = useContext(ShapeContext);
+  const { selectedShape,setSelectedShape, shapes, setShapes } = useContext(ShapeContext);
 
   if (!selectedShape) return <></>;
-  const [newCoordinate, setNewCoordinate] = useState({
-    x: selectedShape.params.x,
-    y: selectedShape.params.y,
-  });
-
-  useEffect(() => {
-    setNewCoordinate({
-      x: selectedShape.params.x,
-      y: selectedShape.params.y,
-    });
-  }, [selectedShape]);
-
 
   const handleChangeSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       currentTarget: { id, valueAsNumber },
     } = event;
-    setNewCoordinate((prev) => ({
-      ...prev,
-      [id]: valueAsNumber,
-    }));
+    setSelectedShape({
+      ...selectedShape,
+      params: {
+        ...selectedShape.params,
+        x: id === 'x' ? valueAsNumber : selectedShape.params.x,
+        y: id === 'y' ? valueAsNumber : selectedShape.params.y,
+      }
+    })
     const copyShapes = [...shapes];
     const indexCurrentShape = copyShapes.findIndex(
       (shape) => shape.id === selectedShape.id
     );
     if (indexCurrentShape === -1) return;
+    console.log("🚀 ~ file: index.tsx ~ line 38 ~ handleChangeSelected ~ indexCurrentShape", indexCurrentShape)
+    
     const newCtx = createNewCanvas({
       ...selectedShape.params,
-      x: newCoordinate.x,
-      y: newCoordinate.y,
+      [id]: valueAsNumber,
       isEditing: true,
     });
     copyShapes[indexCurrentShape] = newCtx;
@@ -54,7 +47,7 @@ const ShapeConfiguration = () => {
           <input
             type="number"
             className="w-10 p-0.5"
-            value={newCoordinate.x}
+            value={selectedShape.params.x}
             id="x"
             autoComplete="false"
             step={10}
@@ -67,7 +60,7 @@ const ShapeConfiguration = () => {
           <input
             type="number"
             className="w-10 p-0.5"
-            value={newCoordinate.y}
+            value={selectedShape.params.y}
             id="y"
             autoComplete="false"
             step={10}
