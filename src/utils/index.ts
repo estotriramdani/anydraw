@@ -16,6 +16,7 @@ export const getCanvasEl = ({ id }: { id: string }) => {
 type CreateNewCanvas = {
   fillStyle: string;
   strokeStyle?: string;
+  lineWidth?: number;
 };
 
 export interface INewCanvas {
@@ -24,7 +25,7 @@ export interface INewCanvas {
 }
 
 export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
-  const { fillStyle, strokeStyle } = params;
+  const { fillStyle, strokeStyle, lineWidth } = params;
   const newCanvas = document.createElement('canvas') as HTMLCanvasElement;
   const id = Math.random().toString();
   newCanvas.id = id;
@@ -33,13 +34,10 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
   newCanvas.style.position = 'absolute';
   newCanvas.style.top = '0';
   newCanvas.style.left = '0';
-  // const parentElement = document.getElementById(
-  //   'parentElement'
-  // )! as HTMLDivElement;
-  // parentElement.appendChild(newCanvas);
   const ctx = newCanvas.getContext('2d')!;
   ctx.fillStyle = fillStyle;
   ctx.strokeStyle = strokeStyle || fillStyle;
+  ctx.lineWidth = lineWidth || 3;
   ctx.rect(100 * Math.random(), 100 * Math.random(), 200, 200);
   ctx.fill();
   ctx.stroke();

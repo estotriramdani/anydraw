@@ -4,7 +4,7 @@ import ShapeContext from '../../../context/ShapeContext';
 import { createNewCanvas } from '../../../utils';
 
 const ShapeChooser = () => {
-  const { setShapes } = useContext(ShapeContext);
+  const { setShapes, lineWidth } = useContext(ShapeContext);
   const { color } = useContext(ColorContext);
 
   const handleAddShape = () => {
@@ -13,6 +13,7 @@ const ShapeChooser = () => {
       createNewCanvas({
         fillStyle: color.fillStyle,
         strokeStyle: color.strokeStyle,
+        lineWidth,
       }),
     ]);
   };
