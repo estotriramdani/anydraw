@@ -39,6 +39,7 @@ export type TShapeType = ShapeAttributes['shapeType'];
 export interface INewCanvas {
   id: string;
   newCanvas: HTMLCanvasElement;
+  params: CreateNewCanvas;
 }
 
 export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
@@ -60,5 +61,5 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     ctx.fill();
     if (strokeStyle) ctx.stroke();
   }
-  return { id, newCanvas };
+  return { id, newCanvas, params };
 };
