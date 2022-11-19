@@ -6,3 +6,5 @@ TODO
 5. insert image
 6. drag canvas
 7. scale image
+
+simpan state canvas and shape nya
