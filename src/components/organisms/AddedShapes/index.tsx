@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import ShapeContext from '../../../context/ShapeContext';
+import { removeShape } from '../../../utils';
 
 const AddedShapes = () => {
   const { shapes, setShapes, selectedShape, setSelectedShape } =
@@ -28,9 +29,7 @@ const AddedShapes = () => {
               className="btn-error btn-sm btn"
               onClick={() => {
                 setSelectedShape(undefined);
-                setShapes((prev) =>
-                  prev.filter((shape2) => shape2.id !== shape.id)
-                );
+                removeShape({ setShapes, id: shape.id });
               }}
             >
               <i className="bi bi-trash-fill"></i>

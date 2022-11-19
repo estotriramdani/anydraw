@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import { canvasSize } from '../constants';
 
 export const getCanvasCtx = ({ id }: { id: string }) => {
@@ -49,7 +50,7 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     params;
   const newCanvas = document.createElement('canvas') as HTMLCanvasElement;
   const id = params.id || Math.random().toString();
-  // newCanvas.id = id;
+  newCanvas.id = id;
   newCanvas.className = 'shapes';
   newCanvas.height = canvasSize.height;
   newCanvas.width = canvasSize.width;
@@ -87,4 +88,15 @@ export const changeShapeProps = (params: {
     ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
     ctx.rect(x, y, w!, h!);
   }
+};
+
+export const removeShape = ({
+  setShapes,
+  id,
+}: {
+  setShapes: Dispatch<React.SetStateAction<INewCanvas[]>>;
+  id: string;
+}) => {
+  document.getElementById(id)?.remove();
+  setShapes((prev) => prev.filter((prev) => prev.id !== id));
 };
