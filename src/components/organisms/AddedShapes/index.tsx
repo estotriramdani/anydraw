@@ -26,11 +26,12 @@ const AddedShapes = () => {
             </button>
             <button
               className="btn-error btn-sm btn"
-              onClick={() =>
+              onClick={() => {
+                setSelectedShape(undefined);
                 setShapes((prev) =>
                   prev.filter((shape2) => shape2.id !== shape.id)
-                )
-              }
+                );
+              }}
             >
               <i className="bi bi-trash-fill"></i>
             </button>
