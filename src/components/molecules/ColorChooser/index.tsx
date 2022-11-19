@@ -1,23 +1,32 @@
+import { useContext } from 'react';
+import ColorContext from '../../../context/ColorContext';
+
 const ColorChooser = () => {
+  const { color, setColor } = useContext(ColorContext);
+
   return (
-    <div className="">
-      <label htmlFor="color" className="block text-xs mb-1">
+    <div>
+      <label htmlFor="color" className="mb-1 block text-xs">
         Color
       </label>
       <input
         type="color"
         className="mb-1 block h-8 w-full rounded-md"
-        value="#fafafa"
-        id="color"
+        value={color.fillStyle}
+        onChange={(event) =>
+          setColor((prev) => ({ ...prev, fillStyle: event.target.value }))
+        }
       />
-      <label htmlFor="border" className="block text-xs mb-1">
+      <label htmlFor="border" className="mb-1 block text-xs">
         Border
       </label>
       <input
         type="color"
-        id="border"
         className="block h-8 w-full rounded-md"
-        value="#fafafa"
+        value={color.strokeStyle}
+        onChange={(event) =>
+          setColor((prev) => ({ ...prev, strokeStyle: event.target.value }))
+        }
       />
     </div>
   );

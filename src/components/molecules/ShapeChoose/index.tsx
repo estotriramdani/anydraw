@@ -1,16 +1,18 @@
 import { useContext } from 'react';
+import ColorContext from '../../../context/ColorContext';
 import ShapeContext from '../../../context/ShapeContext';
 import { createNewCanvas } from '../../../utils';
 
 const ShapeChooser = () => {
   const { setShapes } = useContext(ShapeContext);
+  const { color } = useContext(ColorContext);
 
-  const handleAddShape = ({ fillStyle }: { fillStyle?: string }) => {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const handleAddShape = () => {
     setShapes((prev) => [
       ...prev,
       createNewCanvas({
-        fillStyle: fillStyle || `#${randomColor}`,
+        fillStyle: color.fillStyle,
+        strokeStyle: color.strokeStyle,
       }),
     ]);
   };
@@ -27,7 +29,7 @@ const ShapeChooser = () => {
       <button
         title="square"
         className="btn-outline btn-primary btn-sm btn block"
-        onClick={() => handleAddShape({})}
+        onClick={handleAddShape}
       >
         <i className="bi bi-square"></i>
       </button>
