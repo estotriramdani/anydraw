@@ -30,8 +30,10 @@ type CreateNewCanvas = {
   fillStyle: string;
   strokeStyle?: string;
   lineWidth?: number;
-  x?: number;
-  y?: number;
+  id: string;
+  x: number;
+  y: number;
+  isEditing?: boolean;
 } & ShapeAttributes;
 
 export type TShapeType = ShapeAttributes['shapeType'];
@@ -43,9 +45,10 @@ export interface INewCanvas {
 }
 
 export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
-  const { fillStyle, strokeStyle, lineWidth, shapeType, x, y } = params;
+  const { fillStyle, strokeStyle, lineWidth, shapeType, x, y, isEditing } =
+    params;
   const newCanvas = document.createElement('canvas') as HTMLCanvasElement;
-  const id = Math.random().toString();
+  const id = params.id || Math.random().toString();
   newCanvas.id = id;
   newCanvas.height = canvasSize.height;
   newCanvas.width = canvasSize.width;
@@ -53,13 +56,35 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
   newCanvas.style.top = '0';
   newCanvas.style.left = '0';
   const ctx = newCanvas.getContext('2d')!;
+  if (isEditing) {
+    ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
+  }
   ctx.fillStyle = fillStyle;
   ctx.strokeStyle = strokeStyle || fillStyle;
   ctx.lineWidth = lineWidth === undefined ? 0 : lineWidth;
   if (shapeType === 'rect') {
-    ctx.rect(x || 0, y || 0, params.w || 200, params.h || 200);
+    ctx.rect(x || 10, y || 10, params.w || 200, params.h || 200);
     ctx.fill();
-    if (strokeStyle) ctx.stroke();
+    if (strokeStyle) {
+      if (!isEditing) ctx.stroke();
+    }
   }
   return { id, newCanvas, params };
+};
+
+export const changeShapeProps = (params: {
+  canvasEl: HTMLCanvasElement;
+  shapeData: CreateNewCanvas;
+}) => {
+  const { canvasEl, shapeData } = params;
+  console.log(shapeData);
+  if (shapeData.shapeType === 'rect') {
+    const { x, y, w, h } = shapeData;
+    const ctx = canvasEl.getContext('2d')!;
+    ctx.fillStyle = shapeData.fillStyle!;
+    ctx.strokeStyle = shapeData.strokeStyle!;
+    ctx.lineWidth = shapeData.lineWidth === undefined ? 0 : shapeData.lineWidth;
+    ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+    ctx.rect(x, y, w!, h!);
+  }
 };
