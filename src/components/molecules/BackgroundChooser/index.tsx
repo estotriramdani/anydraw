@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { BG_CANVAS_ID, canvasSize } from '../../../constants';
-import { getCanvasCtx, getCanvasEl } from '../../../utils';
+import { getCanvasCtx } from '../../../utils';
 
 const BackgroundChooser = () => {
   const [src, setSrc] = useState('');
-  const [img, setImg] = useState<any>();
-  const [position, setPosition] = useState(0);
-  const [isMoving, setIsMoving] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (!acceptedFiles) return;
@@ -25,7 +22,6 @@ const BackgroundChooser = () => {
     setSrc(imageSrc);
     const image = new Image();
     image.src = imageSrc;
-    setImg(image);
     const ctx = getCanvasCtx({ id: BG_CANVAS_ID });
     if (!ctx) return;
     image.onload = () => {
@@ -45,35 +41,10 @@ const BackgroundChooser = () => {
       ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
       ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
       ctx.drawImage(image, 0, yCoordinate, finalWidth, finalHeight);
-      setImg(image);
     };
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  const handleHorizontalMove = (post: number) => {
-    setPosition(post);
-    const ctx = getCanvasCtx({ id: BG_CANVAS_ID });
-    if (!ctx) return;
-    console.log('image loaded');
-    const { width } = img;
-    const widthPercentage = canvasSize.width / width;
-    const finalWidth = canvasSize.width;
-    const finalHeight = img.height * widthPercentage;
-    let yCoordinate = 0;
-    if (finalHeight !== canvasSize.height) {
-      const diff = canvasSize.height - finalHeight;
-      yCoordinate = Math.abs(diff) / 2;
-      if (diff < 0) {
-        yCoordinate *= -1;
-      }
-    }
-    ctx.fillStyle = '#fff';
-    ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
-    ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
-    ctx.drawImage(img, position, yCoordinate, finalWidth, finalHeight);
-    setImg(img);
-  };
 
   return (
     <div className="w-full">

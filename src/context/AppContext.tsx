@@ -1,9 +1,7 @@
-import { createContext, ReactNode } from 'react';
-
-const AppContext = createContext({});
-
-export default AppContext;
+import { ReactNode } from 'react';
+import Compose from './Compose';
+import { ShapeContextProvider } from './ShapeContext';
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  return <AppContext.Provider value={{}}>{children}</AppContext.Provider>;
+  return <Compose components={[ShapeContextProvider]}>{children}</Compose>;
 };

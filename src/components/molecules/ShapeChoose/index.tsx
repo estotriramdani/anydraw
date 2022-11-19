@@ -1,4 +1,20 @@
+import { useContext } from 'react';
+import ShapeContext from '../../../context/ShapeContext';
+import { createNewCanvas } from '../../../utils';
+
 const ShapeChooser = () => {
+  const { setShapes } = useContext(ShapeContext);
+
+  const handleAddShape = ({ fillStyle }: { fillStyle?: string }) => {
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    setShapes((prev) => [
+      ...prev,
+      createNewCanvas({
+        fillStyle: fillStyle || `#${randomColor}`,
+      }),
+    ]);
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <span className="text-xs">Shapes</span>
@@ -11,6 +27,7 @@ const ShapeChooser = () => {
       <button
         title="square"
         className="btn-outline btn-primary btn-sm btn block"
+        onClick={() => handleAddShape({})}
       >
         <i className="bi bi-square"></i>
       </button>
