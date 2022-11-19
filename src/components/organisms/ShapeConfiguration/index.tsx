@@ -7,7 +7,8 @@ const Separator = () => {
 };
 
 const ShapeConfiguration = () => {
-  const { selectedShape,setSelectedShape, shapes, setShapes } = useContext(ShapeContext);
+  const { selectedShape, setSelectedShape, shapes, setShapes } =
+    useContext(ShapeContext);
 
   if (!selectedShape) return <></>;
 
@@ -21,15 +22,14 @@ const ShapeConfiguration = () => {
         ...selectedShape.params,
         x: id === 'x' ? valueAsNumber : selectedShape.params.x,
         y: id === 'y' ? valueAsNumber : selectedShape.params.y,
-      }
-    })
+      },
+    });
     const copyShapes = [...shapes];
     const indexCurrentShape = copyShapes.findIndex(
       (shape) => shape.id === selectedShape.id
     );
     if (indexCurrentShape === -1) return;
-    console.log("🚀 ~ file: index.tsx ~ line 38 ~ handleChangeSelected ~ indexCurrentShape", indexCurrentShape)
-    
+
     const newCtx = createNewCanvas({
       ...selectedShape.params,
       [id]: valueAsNumber,
