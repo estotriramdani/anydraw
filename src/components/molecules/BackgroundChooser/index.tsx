@@ -46,6 +46,13 @@ const BackgroundChooser = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const handleRemoveBg = () => {
+    const ctx = getCanvasCtx({ id: BG_CANVAS_ID });
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
+    setSrc('');
+  };
+
   return (
     <div className="w-full">
       <span className="text-xs">Background</span>
@@ -69,7 +76,7 @@ const BackgroundChooser = () => {
         <div className="relative h-10 w-full overflow-hidden rounded-lg">
           <button
             className="absolute block h-full w-full bg-error/0 duration-150 hover:bg-error/80"
-            onClick={() => setSrc('')}
+            onClick={handleRemoveBg}
           >
             <i className="bi bi-trash"></i>
           </button>

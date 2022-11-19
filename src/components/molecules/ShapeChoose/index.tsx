@@ -1,19 +1,20 @@
 import { useContext } from 'react';
 import ColorContext from '../../../context/ColorContext';
 import ShapeContext from '../../../context/ShapeContext';
-import { createNewCanvas } from '../../../utils';
+import { createNewCanvas, TShapeType } from '../../../utils';
 
 const ShapeChooser = () => {
   const { setShapes, lineWidth } = useContext(ShapeContext);
   const { color } = useContext(ColorContext);
 
-  const handleAddShape = () => {
+  const handleAddShape = ({ shapeType }: { shapeType: TShapeType }) => {
     setShapes((prev) => [
       ...prev,
       createNewCanvas({
         fillStyle: color.fillStyle,
         strokeStyle: color.strokeStyle,
         lineWidth,
+        shapeType,
       }),
     ]);
   };
@@ -30,7 +31,7 @@ const ShapeChooser = () => {
       <button
         title="square"
         className="btn-outline btn-primary btn-sm btn block"
-        onClick={handleAddShape}
+        onClick={() => handleAddShape({ shapeType: 'rect' })}
       >
         <i className="bi bi-square"></i>
       </button>

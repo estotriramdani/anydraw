@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom/client';
 import { useContext } from 'react';
 import Toolbar from './components/organisms/Toolbar';
 import { BG_CANVAS_ID, canvasSize } from './constants';
@@ -12,7 +11,7 @@ export default function App() {
       <Toolbar />
       <div
         id="parentElement"
-        className={`h-[${canvasSize.height}px] w-[${canvasSize.width}px] relative rounded-lg bg-neutral-content shadow`}
+        className={`h-[${canvasSize.height}px] w-[${canvasSize.width}px] relative rounded-lg bg-neutral-content shadow-xl overflow-hidden`}
       >
         <canvas
           id={BG_CANVAS_ID}
