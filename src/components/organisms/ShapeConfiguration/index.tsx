@@ -1,15 +1,14 @@
-import { useContext } from 'react';
-import ShapeContext from '../../../context/ShapeContext';
-import { createNewCanvas } from '../../../utils';
-import BasicSize from './BasicSize';
+import { useContext } from "react";
+import ShapeContext from "../../../context/ShapeContext";
+import { createNewCanvas } from "../../../utils";
+import BasicSize from "./BasicSize";
 
 const Separator = () => {
   return <div className="h-full w-px bg-neutral-content" />;
 };
 
 const ShapeConfiguration = () => {
-  const { selectedShape, setSelectedShape, shapes, setShapes } =
-    useContext(ShapeContext);
+  const { selectedShape, setSelectedShape, shapes, setShapes } = useContext(ShapeContext);
 
   if (!selectedShape) return <></>;
 
@@ -18,7 +17,7 @@ const ShapeConfiguration = () => {
       currentTarget: { id, valueAsNumber, value },
     } = event;
     let val: string | number = valueAsNumber;
-    if (!['x', 'y', 'w', 'h'].includes(id)) {
+    if (!["x", "y", "w", "h"].includes(id)) {
       val = value;
     }
     setSelectedShape({
@@ -29,9 +28,7 @@ const ShapeConfiguration = () => {
       },
     });
     const copyShapes = [...shapes];
-    const indexCurrentShape = copyShapes.findIndex(
-      (shape) => shape.id === selectedShape.id
-    );
+    const indexCurrentShape = copyShapes.findIndex((shape) => shape.id === selectedShape.id);
     if (indexCurrentShape === -1) return;
 
     const newCtx = createNewCanvas({
@@ -66,13 +63,17 @@ const ShapeConfiguration = () => {
           handleChangeSelected={handleChangeSelected}
           value={selectedShape.params.w}
         />
-        <Separator />
-        <BasicSize
-          type="number"
-          id="h"
-          handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.h}
-        />
+        {selectedShape.params.shapeType === "rect" && (
+          <>
+            <Separator />
+            <BasicSize
+              type="number"
+              id="h"
+              handleChangeSelected={handleChangeSelected}
+              value={selectedShape.params.h}
+            />
+          </>
+        )}
         <Separator />
         <BasicSize
           label="Color"

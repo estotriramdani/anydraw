@@ -1,16 +1,16 @@
-import React from 'react';
-import { INewCanvas } from '../../../utils';
+import React from "react";
 
 interface Props {
   handleChangeSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: number | string;
   id: string;
-  type: 'number' | 'color' | 'text';
+  type: "number" | "color" | "text";
   label?: string;
+  disabled?: boolean;
 }
 
 const BasicSize = (props: Props) => {
-  const { handleChangeSelected, id, value, type, label } = props;
+  const { handleChangeSelected, id, value, type, label, disabled } = props;
   return (
     <div className="flex items-center gap-1.5 text-sm">
       <span>{label || id.toUpperCase()}</span>
@@ -20,8 +20,9 @@ const BasicSize = (props: Props) => {
         value={value}
         id={id}
         autoComplete="false"
-        step={type === 'number' ? 10 : undefined}
+        step={type === "number" ? 10 : undefined}
         onChange={handleChangeSelected}
+        disabled={disabled}
       />
     </div>
   );
