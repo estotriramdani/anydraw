@@ -1,11 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import ColorContext from '../../../context/ColorContext';
 import ShapeContext from '../../../context/ShapeContext';
+import useDraw from '../../../hooks/useDraw';
 import { createNewCanvas, getCanvasEl, TShapeType } from '../../../utils';
 
 const ShapeChooser = () => {
-  const { setShapes, lineWidth, selectedShape } = useContext(ShapeContext);
+  const { setShapes, lineWidth } = useContext(ShapeContext);
   const { color } = useContext(ColorContext);
 
   const handleAddShape = ({ shapeType }: { shapeType: TShapeType }) => {
@@ -36,28 +37,7 @@ const ShapeChooser = () => {
     ]);
   };
 
-  useEffect(() => {
-    if (selectedShape?.params.shapeType === 'draw') {
-      const canvas = getCanvasEl({ id: selectedShape.id });
-      console.log(
-        '🚀 ~ file: index.tsx ~ line 42 ~ useEffect ~ canvas',
-        canvas
-      );
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          canvas.addEventListener('mousemove', (event) => {
-            ctx.lineWidth = 10;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = 'black';
-            ctx.lineTo(event.clientX, event.clientY);
-            ctx.beginPath();
-            ctx.moveTo(event.clientX, event.clientY);
-          });
-        }
-      }
-    }
-  }, [selectedShape]);
+  useDraw();
 
   return (
     <div className="flex flex-col gap-2">

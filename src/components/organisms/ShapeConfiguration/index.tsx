@@ -49,19 +49,24 @@ const ShapeConfiguration = () => {
   return (
     <div className="fixed inset-x-0 bottom-2 z-10  mx-auto flex justify-center">
       <div className="flex gap-3 rounded-lg bg-neutral p-2 px-3 shadow-lg">
-        <BasicSize
-          type="number"
-          id="x"
-          handleChangeSelected={handleChangeSelected}
-          value={params.x}
-        />
-        <Separator />
-        <BasicSize
-          type="number"
-          id="y"
-          handleChangeSelected={handleChangeSelected}
-          value={params.y}
-        />
+        {params.shapeType !== 'draw' && (
+          <>
+            <BasicSize
+              type="number"
+              id="x"
+              handleChangeSelected={handleChangeSelected}
+              value={params.x}
+            />
+            <Separator />
+            <BasicSize
+              type="number"
+              id="y"
+              handleChangeSelected={handleChangeSelected}
+              value={params.y}
+            />
+          </>
+        )}
+
         {params.shapeType === 'text' && (
           <>
             <Separator />
@@ -109,7 +114,7 @@ const ShapeConfiguration = () => {
             />
           </>
         )}
-        <Separator />
+        {params.shapeType !== 'draw' && <Separator />}
         <BasicSize
           label="Color"
           type="color"

@@ -72,7 +72,7 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
   newCanvas.style.top = '0';
   newCanvas.style.left = '0';
   const ctx = newCanvas.getContext('2d')!;
-  if (isEditing) {
+  if (isEditing && shapeType !== 'draw') {
     ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
   }
   ctx.fillStyle = fillStyle;
@@ -90,9 +90,7 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillText(text, x, y);
   }
-  if (strokeStyle) {
-    ctx.stroke();
-  }
+  ctx.stroke();
   return { id, newCanvas, params };
 };
 
