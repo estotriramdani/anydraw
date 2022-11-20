@@ -65,11 +65,14 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
   ctx.strokeStyle = strokeStyle || fillStyle;
   ctx.lineWidth = lineWidth === undefined ? 0 : lineWidth;
   if (shapeType === 'rect') {
-    ctx.rect(x || 10, y || 10, params.w || 200, params.h || 200);
-    ctx.fill();
-    if (strokeStyle) {
-      ctx.stroke();
-    }
+    ctx.rect(x, y, params.w || 200, params.h || 200);
+  }
+  if (shapeType === 'arc') {
+    ctx.arc(x, y, params.w || 200, 0, 2 * Math.PI);
+  }
+  ctx.fill();
+  if (strokeStyle) {
+    ctx.stroke();
   }
   return { id, newCanvas, params };
 };

@@ -1,7 +1,7 @@
 import Gap from '../../atoms/Gap';
 import BackgroundChooser from '../../molecules/BackgroundChooser';
 import ColorChooser from '../../molecules/ColorChooser';
-import ShapeChooser from '../../molecules/ShapeChoose';
+import ShapeChooser from '../../molecules/ShapeChooser';
 
 const Toolbar = () => {
   return (

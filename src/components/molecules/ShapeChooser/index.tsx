@@ -15,10 +15,10 @@ const ShapeChooser = () => {
         strokeStyle: color.strokeStyle,
         lineWidth,
         shapeType,
-        x: 10,
-        y: 10,
-        w: 200,
-        h: 200,
+        x: shapeType === 'arc' ? 100 : 10,
+        y: shapeType === 'arc' ? 100 : 10,
+        w: 100,
+        h: 100,
         id: Math.random().toString(),
       }),
     ]);
@@ -43,6 +43,7 @@ const ShapeChooser = () => {
       <button
         title="circle"
         className="btn-outline btn-primary btn-sm btn block"
+        onClick={() => handleAddShape({ shapeType: 'arc' })}
       >
         <i className="bi bi-circle"></i>
       </button>
