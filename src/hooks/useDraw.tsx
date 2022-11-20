@@ -13,10 +13,10 @@ const draw = (
   ctx.lineWidth = 10;
   ctx.lineCap = 'round';
   ctx.strokeStyle = color;
-  ctx.lineTo(event.clientX - 300, event.clientY - 70);
+  ctx.lineTo(event.offsetX, event.offsetY);
   ctx.stroke();
   ctx.beginPath();
-  ctx.moveTo(event.clientX - 300, event.clientY - 70);
+  ctx.moveTo(event.offsetX, event.offsetY);
 };
 
 const useDraw = () => {
@@ -28,8 +28,8 @@ const useDraw = () => {
       const canvas = getCanvasEl({ id: selectedShape.id });
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      let isDraw = false;
       if (!ctx) return;
+      let isDraw = false;
       canvas.addEventListener('mousedown', (event) => {
         isDraw = true;
         ctx.beginPath();

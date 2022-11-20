@@ -8,6 +8,8 @@ interface IShapeContext {
   lineWidth: number;
   selectedShape?: INewCanvas;
   setSelectedShape: Dispatch<React.SetStateAction<INewCanvas | undefined>>;
+  setShapeLoading: Dispatch<React.SetStateAction<boolean>>;
+  shapeLoading: boolean;
 }
 
 const ShapeContext = createContext<IShapeContext>({
@@ -16,12 +18,15 @@ const ShapeContext = createContext<IShapeContext>({
   setLineWidth: () => undefined,
   lineWidth: 5,
   setSelectedShape: () => undefined,
+  setShapeLoading: () => undefined,
+  shapeLoading: false,
 });
 
 export default ShapeContext;
 
 export const ShapeContextProvider = ({ children }: { children: ReactNode }) => {
   const [shapes, setShapes] = useState<INewCanvas[]>([]);
+  const [shapeLoading, setShapeLoading] = useState(false);
   const [selectedShape, setSelectedShape] = useState<INewCanvas>();
   const [lineWidth, setLineWidth] = useState(5);
 
@@ -49,6 +54,8 @@ export const ShapeContextProvider = ({ children }: { children: ReactNode }) => {
         setLineWidth,
         selectedShape,
         setSelectedShape,
+        shapeLoading,
+        setShapeLoading,
       }}
     >
       {children}

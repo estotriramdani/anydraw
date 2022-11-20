@@ -6,7 +6,8 @@ import useDraw from '../../../hooks/useDraw';
 import { createNewCanvas, getCanvasEl, TShapeType } from '../../../utils';
 
 const ShapeChooser = () => {
-  const { setShapes, lineWidth } = useContext(ShapeContext);
+  const { setShapes, lineWidth, setSelectedShape, setShapeLoading } =
+    useContext(ShapeContext);
   const { color } = useContext(ColorContext);
 
   const handleAddShape = ({ shapeType }: { shapeType: TShapeType }) => {
@@ -19,22 +20,26 @@ const ShapeChooser = () => {
       }
       text = promptText;
     }
-    setShapes((prev) => [
-      ...prev,
-      createNewCanvas({
-        fillStyle: color.fillStyle,
-        strokeStyle: color.strokeStyle,
-        lineWidth,
-        shapeType,
-        x: shapeType === 'arc' ? 100 : 10,
-        y: shapeType === 'arc' ? 100 : 10,
-        w: 100,
-        h: 100,
-        id: Math.random().toString(),
-        text,
-        fontSize: 20,
-      }),
-    ]);
+    setShapeLoading(true);
+    const id = Math.random().toString();
+    const newShape = createNewCanvas({
+      fillStyle: color.fillStyle,
+      strokeStyle: color.strokeStyle,
+      lineWidth,
+      shapeType,
+      x: shapeType === 'arc' ? 100 : 10,
+      y: shapeType === 'arc' ? 100 : 10,
+      w: 100,
+      h: 100,
+      id,
+      text,
+      fontSize: 20,
+    });
+    setShapes((prev) => [...prev, newShape]);
+    setTimeout(() => {
+      setSelectedShape(newShape);
+      setShapeLoading(false);
+    }, 500);
   };
 
   useDraw();

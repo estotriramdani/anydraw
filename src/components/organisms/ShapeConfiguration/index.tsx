@@ -46,26 +46,24 @@ const ShapeConfiguration = () => {
   const { params } = selectedShape;
   const arcAndRect = params.shapeType === 'rect' || params.shapeType === 'arc';
 
+  if (params.shapeType === 'draw') return <></>;
+
   return (
     <div className="fixed inset-x-0 bottom-2 z-10  mx-auto flex justify-center">
       <div className="flex gap-3 rounded-lg bg-neutral p-2 px-3 shadow-lg">
-        {params.shapeType !== 'draw' && (
-          <>
-            <BasicSize
-              type="number"
-              id="x"
-              handleChangeSelected={handleChangeSelected}
-              value={params.x}
-            />
-            <Separator />
-            <BasicSize
-              type="number"
-              id="y"
-              handleChangeSelected={handleChangeSelected}
-              value={params.y}
-            />
-          </>
-        )}
+        <BasicSize
+          type="number"
+          id="x"
+          handleChangeSelected={handleChangeSelected}
+          value={params.x}
+        />
+        <Separator />
+        <BasicSize
+          type="number"
+          id="y"
+          handleChangeSelected={handleChangeSelected}
+          value={params.y}
+        />
 
         {params.shapeType === 'text' && (
           <>
@@ -114,7 +112,7 @@ const ShapeConfiguration = () => {
             />
           </>
         )}
-        {params.shapeType !== 'draw' && <Separator />}
+        <Separator />
         <BasicSize
           label="Color"
           type="color"

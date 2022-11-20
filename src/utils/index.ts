@@ -90,7 +90,7 @@ export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillText(text, x, y);
   }
-  ctx.stroke();
+  if (strokeStyle) ctx.stroke();
   return { id, newCanvas, params };
 };
 
