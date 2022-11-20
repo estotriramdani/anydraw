@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   handleChangeSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: number | string;
   id: string;
-  type: "number" | "color" | "text";
+  type: 'number' | 'color' | 'text';
   label?: string;
   disabled?: boolean;
 }
@@ -20,7 +20,7 @@ const BasicSize = (props: Props) => {
         value={value}
         id={id}
         autoComplete="false"
-        step={type === "number" ? 10 : undefined}
+        step={type === 'number' ? 10 : undefined}
         onChange={handleChangeSelected}
         disabled={disabled}
       />

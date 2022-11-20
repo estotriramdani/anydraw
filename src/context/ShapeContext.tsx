@@ -34,7 +34,7 @@ export const ShapeContextProvider = ({ children }: { children: ReactNode }) => {
       const element = canvasShapes[index];
       parentElement.removeChild(element);
     }
-    shapes.forEach((shape, index) => {
+    shapes.forEach((shape) => {
       parentElement.appendChild(shape.newCanvas);
       if (shapes.length === 1) setSelectedShape(shape);
     });

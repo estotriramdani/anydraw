@@ -1,14 +1,15 @@
-import { useContext } from "react";
-import ShapeContext from "../../../context/ShapeContext";
-import { createNewCanvas } from "../../../utils";
-import BasicSize from "./BasicSize";
+import { useContext } from 'react';
+import ShapeContext from '../../../context/ShapeContext';
+import { createNewCanvas } from '../../../utils';
+import BasicSize from './BasicSize';
 
 const Separator = () => {
   return <div className="h-full w-px bg-neutral-content" />;
 };
 
 const ShapeConfiguration = () => {
-  const { selectedShape, setSelectedShape, shapes, setShapes } = useContext(ShapeContext);
+  const { selectedShape, setSelectedShape, shapes, setShapes } =
+    useContext(ShapeContext);
 
   if (!selectedShape) return <></>;
 
@@ -17,7 +18,7 @@ const ShapeConfiguration = () => {
       currentTarget: { id, valueAsNumber, value },
     } = event;
     let val: string | number = valueAsNumber;
-    if (!["x", "y", "w", "h", "fontSize"].includes(id)) {
+    if (!['x', 'y', 'w', 'h', 'fontSize'].includes(id)) {
       val = value;
     }
     setSelectedShape({
@@ -28,7 +29,9 @@ const ShapeConfiguration = () => {
       },
     });
     const copyShapes = [...shapes];
-    const indexCurrentShape = copyShapes.findIndex((shape) => shape.id === selectedShape.id);
+    const indexCurrentShape = copyShapes.findIndex(
+      (shape) => shape.id === selectedShape.id
+    );
     if (indexCurrentShape === -1) return;
 
     const newCtx = createNewCanvas({
@@ -41,15 +44,25 @@ const ShapeConfiguration = () => {
   };
 
   const { params } = selectedShape;
-  const arcAndRect = params.shapeType === "rect" || params.shapeType === "arc";
+  const arcAndRect = params.shapeType === 'rect' || params.shapeType === 'arc';
 
   return (
     <div className="fixed inset-x-0 bottom-2 z-10  mx-auto flex justify-center">
       <div className="flex gap-3 rounded-lg bg-neutral p-2 px-3 shadow-lg">
-        <BasicSize type="number" id="x" handleChangeSelected={handleChangeSelected} value={params.x} />
+        <BasicSize
+          type="number"
+          id="x"
+          handleChangeSelected={handleChangeSelected}
+          value={params.x}
+        />
         <Separator />
-        <BasicSize type="number" id="y" handleChangeSelected={handleChangeSelected} value={params.y} />
-        {params.shapeType === "text" && (
+        <BasicSize
+          type="number"
+          id="y"
+          handleChangeSelected={handleChangeSelected}
+          value={params.y}
+        />
+        {params.shapeType === 'text' && (
           <>
             <Separator />
             <div className="flex items-center gap-1.5 text-sm">
@@ -77,13 +90,23 @@ const ShapeConfiguration = () => {
         {arcAndRect && (
           <>
             <Separator />
-            <BasicSize type="number" id="w" handleChangeSelected={handleChangeSelected} value={params.w} />
+            <BasicSize
+              type="number"
+              id="w"
+              handleChangeSelected={handleChangeSelected}
+              value={params.w}
+            />
           </>
         )}
-        {params.shapeType === "rect" && (
+        {params.shapeType === 'rect' && (
           <>
             <Separator />
-            <BasicSize type="number" id="h" handleChangeSelected={handleChangeSelected} value={params.h} />
+            <BasicSize
+              type="number"
+              id="h"
+              handleChangeSelected={handleChangeSelected}
+              value={params.h}
+            />
           </>
         )}
         <Separator />
