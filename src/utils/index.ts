@@ -1,10 +1,10 @@
-import { Dispatch } from 'react';
-import { canvasSize } from '../constants';
+import { Dispatch } from "react";
+import { canvasSize } from "../constants";
 
 export const getCanvasCtx = ({ id }: { id: string }) => {
   const canvas = document.getElementById(id) as HTMLCanvasElement;
   if (!canvas) return;
-  const ctx = canvas.getContext('2d')!;
+  const ctx = canvas.getContext("2d")!;
   return ctx;
 };
 
@@ -16,13 +16,13 @@ export const getCanvasEl = ({ id }: { id: string }) => {
 
 type ShapeAttributes =
   | {
-      shapeType: 'rect';
+      shapeType: "rect";
     }
   | {
-      shapeType: 'arc';
+      shapeType: "arc";
     }
   | {
-      shapeType: 'line';
+      shapeType: "text";
     };
 
 type CreateNewCanvas = {
@@ -35,9 +35,11 @@ type CreateNewCanvas = {
   w?: number;
   h?: number;
   isEditing?: boolean;
+  text?: string;
+  fontSize?: number;
 } & ShapeAttributes;
 
-export type TShapeType = ShapeAttributes['shapeType'];
+export type TShapeType = ShapeAttributes["shapeType"];
 
 export interface INewCanvas {
   id: string;
@@ -46,45 +48,46 @@ export interface INewCanvas {
 }
 
 export const createNewCanvas = (params: CreateNewCanvas): INewCanvas => {
-  const { fillStyle, strokeStyle, lineWidth, shapeType, x, y, isEditing } =
-    params;
-  const newCanvas = document.createElement('canvas') as HTMLCanvasElement;
+  const { fillStyle, strokeStyle, lineWidth, shapeType, x, y, isEditing, text, fontSize } = params;
+  const newCanvas = document.createElement("canvas") as HTMLCanvasElement;
   const id = params.id || Math.random().toString();
   newCanvas.id = id;
-  newCanvas.className = 'shapes';
+  newCanvas.className = "shapes";
   newCanvas.height = canvasSize.height;
   newCanvas.width = canvasSize.width;
-  newCanvas.style.position = 'absolute';
-  newCanvas.style.top = '0';
-  newCanvas.style.left = '0';
-  const ctx = newCanvas.getContext('2d')!;
+  newCanvas.style.position = "absolute";
+  newCanvas.style.top = "0";
+  newCanvas.style.left = "0";
+  const ctx = newCanvas.getContext("2d")!;
   if (isEditing) {
     ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
   }
   ctx.fillStyle = fillStyle;
   ctx.strokeStyle = strokeStyle || fillStyle;
   ctx.lineWidth = lineWidth === undefined ? 0 : lineWidth;
-  if (shapeType === 'rect') {
+  if (shapeType === "rect") {
     ctx.rect(x, y, params.w || 200, params.h || 200);
+    ctx.fill();
   }
-  if (shapeType === 'arc') {
+  if (shapeType === "arc") {
     ctx.arc(x, y, params.w || 200, 0, 2 * Math.PI);
+    ctx.fill();
   }
-  ctx.fill();
+  if (shapeType === "text" && text) {
+    ctx.font = `${fontSize}px sans-serif`;
+    ctx.fillText(text, x, y);
+  }
   if (strokeStyle) {
     ctx.stroke();
   }
   return { id, newCanvas, params };
 };
 
-export const changeShapeProps = (params: {
-  canvasEl: HTMLCanvasElement;
-  shapeData: CreateNewCanvas;
-}) => {
+export const changeShapeProps = (params: { canvasEl: HTMLCanvasElement; shapeData: CreateNewCanvas }) => {
   const { canvasEl, shapeData } = params;
-  if (shapeData.shapeType === 'rect') {
+  if (shapeData.shapeType === "rect") {
     const { x, y, w, h } = shapeData;
-    const ctx = canvasEl.getContext('2d')!;
+    const ctx = canvasEl.getContext("2d")!;
     ctx.fillStyle = shapeData.fillStyle!;
     ctx.strokeStyle = shapeData.strokeStyle!;
     ctx.lineWidth = shapeData.lineWidth === undefined ? 0 : shapeData.lineWidth;

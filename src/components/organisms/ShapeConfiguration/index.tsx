@@ -17,7 +17,7 @@ const ShapeConfiguration = () => {
       currentTarget: { id, valueAsNumber, value },
     } = event;
     let val: string | number = valueAsNumber;
-    if (!["x", "y", "w", "h"].includes(id)) {
+    if (!["x", "y", "w", "h", "fontSize"].includes(id)) {
       val = value;
     }
     setSelectedShape({
@@ -40,38 +40,50 @@ const ShapeConfiguration = () => {
     setShapes(copyShapes);
   };
 
+  const { params } = selectedShape;
+  const arcAndRect = params.shapeType === "rect" || params.shapeType === "arc";
+
   return (
     <div className="fixed inset-x-0 bottom-2 z-10  mx-auto flex justify-center">
       <div className="flex gap-3 rounded-lg bg-neutral p-2 px-3 shadow-lg">
-        <BasicSize
-          type="number"
-          id="x"
-          handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.x}
-        />
+        <BasicSize type="number" id="x" handleChangeSelected={handleChangeSelected} value={params.x} />
         <Separator />
-        <BasicSize
-          type="number"
-          id="y"
-          handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.y}
-        />
-        <Separator />
-        <BasicSize
-          type="number"
-          id="w"
-          handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.w}
-        />
-        {selectedShape.params.shapeType === "rect" && (
+        <BasicSize type="number" id="y" handleChangeSelected={handleChangeSelected} value={params.y} />
+        {params.shapeType === "text" && (
           <>
             <Separator />
-            <BasicSize
-              type="number"
-              id="h"
-              handleChangeSelected={handleChangeSelected}
-              value={selectedShape.params.h}
-            />
+            <div className="flex items-center gap-1.5 text-sm">
+              <span>Text</span>
+              <input
+                value={params?.text}
+                className="w-24 rounded p-0.5 px-1"
+                autoComplete="false"
+                id="text"
+                onChange={handleChangeSelected}
+              />
+            </div>
+            <Separator />
+            <div className="flex items-center gap-1.5 text-sm">
+              <BasicSize
+                label="Font size"
+                type="number"
+                id="fontSize"
+                handleChangeSelected={handleChangeSelected}
+                value={params?.fontSize}
+              />
+            </div>
+          </>
+        )}
+        {arcAndRect && (
+          <>
+            <Separator />
+            <BasicSize type="number" id="w" handleChangeSelected={handleChangeSelected} value={params.w} />
+          </>
+        )}
+        {params.shapeType === "rect" && (
+          <>
+            <Separator />
+            <BasicSize type="number" id="h" handleChangeSelected={handleChangeSelected} value={params.h} />
           </>
         )}
         <Separator />
@@ -80,7 +92,7 @@ const ShapeConfiguration = () => {
           type="color"
           id="fillStyle"
           handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.fillStyle}
+          value={params.fillStyle}
         />
         <Separator />
         <BasicSize
@@ -88,7 +100,7 @@ const ShapeConfiguration = () => {
           type="color"
           id="strokeStyle"
           handleChangeSelected={handleChangeSelected}
-          value={selectedShape.params.strokeStyle}
+          value={params.strokeStyle}
         />
       </div>
     </div>
