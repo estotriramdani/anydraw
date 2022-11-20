@@ -17,8 +17,6 @@ export const getCanvasEl = ({ id }: { id: string }) => {
 type ShapeAttributes =
   | {
       shapeType: 'rect';
-      w?: number;
-      h?: number;
     }
   | {
       shapeType: 'arc';
@@ -34,6 +32,8 @@ type CreateNewCanvas = {
   id: string;
   x: number;
   y: number;
+  w?: number;
+  h?: number;
   isEditing?: boolean;
 } & ShapeAttributes;
 

@@ -17,6 +17,8 @@ const ShapeChooser = () => {
         shapeType,
         x: 10,
         y: 10,
+        w: 200,
+        h: 200,
         id: Math.random().toString(),
       }),
     ]);
