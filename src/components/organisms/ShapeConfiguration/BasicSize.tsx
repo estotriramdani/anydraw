@@ -3,22 +3,24 @@ import { INewCanvas } from '../../../utils';
 
 interface Props {
   handleChangeSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: number;
+  value?: number | string;
   id: string;
+  type: 'number' | 'color' | 'text';
+  label?: string;
 }
 
 const BasicSize = (props: Props) => {
-  const { handleChangeSelected, id, value } = props;
+  const { handleChangeSelected, id, value, type, label } = props;
   return (
     <div className="flex items-center gap-1.5 text-sm">
-      <span>{id.toUpperCase()}</span>
+      <span>{label || id.toUpperCase()}</span>
       <input
-        type="number"
-        className="w-10 p-0.5"
+        type={type}
+        className="w-14 rounded p-0.5 px-1"
         value={value}
         id={id}
         autoComplete="false"
-        step={10}
+        step={type === 'number' ? 10 : undefined}
         onChange={handleChangeSelected}
       />
     </div>

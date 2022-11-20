@@ -15,14 +15,17 @@ const ShapeConfiguration = () => {
 
   const handleChangeSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      currentTarget: { id, valueAsNumber },
+      currentTarget: { id, valueAsNumber, value },
     } = event;
+    let val: string | number = valueAsNumber;
+    if (!['x', 'y', 'w', 'h'].includes(id)) {
+      val = value;
+    }
     setSelectedShape({
       ...selectedShape,
       params: {
         ...selectedShape.params,
-        x: id === 'x' ? valueAsNumber : selectedShape.params.x,
-        y: id === 'y' ? valueAsNumber : selectedShape.params.y,
+        [id]: val,
       },
     });
     const copyShapes = [...shapes];
@@ -33,7 +36,7 @@ const ShapeConfiguration = () => {
 
     const newCtx = createNewCanvas({
       ...selectedShape.params,
-      [id]: valueAsNumber,
+      [id]: val,
       isEditing: true,
     });
     copyShapes[indexCurrentShape] = newCtx;
@@ -44,27 +47,47 @@ const ShapeConfiguration = () => {
     <div className="fixed inset-x-0 bottom-2 z-10  mx-auto flex justify-center">
       <div className="flex gap-3 rounded-lg bg-neutral p-2 px-3 shadow-lg">
         <BasicSize
+          type="number"
           id="x"
           handleChangeSelected={handleChangeSelected}
           value={selectedShape.params.x}
         />
         <Separator />
         <BasicSize
+          type="number"
           id="y"
           handleChangeSelected={handleChangeSelected}
           value={selectedShape.params.y}
         />
         <Separator />
         <BasicSize
+          type="number"
           id="w"
           handleChangeSelected={handleChangeSelected}
           value={selectedShape.params.w}
         />
         <Separator />
         <BasicSize
+          type="number"
           id="h"
           handleChangeSelected={handleChangeSelected}
           value={selectedShape.params.h}
+        />
+        <Separator />
+        <BasicSize
+          label="Color"
+          type="color"
+          id="fillStyle"
+          handleChangeSelected={handleChangeSelected}
+          value={selectedShape.params.fillStyle}
+        />
+        <Separator />
+        <BasicSize
+          label="Border"
+          type="color"
+          id="strokeStyle"
+          handleChangeSelected={handleChangeSelected}
+          value={selectedShape.params.strokeStyle}
         />
       </div>
     </div>
