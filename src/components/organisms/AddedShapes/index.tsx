@@ -3,11 +3,16 @@ import ShapeContext from '../../../context/ShapeContext';
 import { removeShape } from '../../../utils';
 
 const AddedShapes = () => {
-  const { shapes, setShapes, selectedShape, setSelectedShape } =
-    useContext(ShapeContext);
+  const {
+    shapes,
+    setShapes,
+    selectedShape,
+    setSelectedShape,
+    setShapeLoading,
+  } = useContext(ShapeContext);
+
   return (
-    <div className="fixed inset-y-0 right-5 bottom-5 z-20 flex flex-col justify-between">
-      <div>{/* max shape here */}</div>
+    <div className="fixed inset-y-0 right-5 bottom-5 z-20 flex flex-col justify-end">
       <ul className="flex flex-col-reverse items-end gap-1">
         {shapes.map((shape, index) => (
           <li key={shape.id} className="mb-1 flex items-center gap-2">
@@ -17,7 +22,11 @@ const AddedShapes = () => {
               } btn-primary btn-sm btn`}
               onClick={() => {
                 if (selectedShape?.id !== shape?.id) {
-                  setSelectedShape(shape);
+                  setShapeLoading(true);
+                  setTimeout(() => {
+                    setShapeLoading(false);
+                    setSelectedShape(shape);
+                  }, 1000);
                 } else {
                   setSelectedShape(undefined);
                 }

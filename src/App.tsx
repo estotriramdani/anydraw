@@ -7,7 +7,7 @@ import { BG_CANVAS_ID, canvasSize } from './constants';
 import ShapeContext from './context/ShapeContext';
 
 export default function App() {
-  const { selectedShape, shapeLoading } = useContext(ShapeContext);
+  const { selectedShape } = useContext(ShapeContext);
 
   return (
     <div className="relative hidden h-screen items-center justify-center lg:flex">
