@@ -43,6 +43,14 @@ const useDraw = () => {
         draw(event, ctx, color.strokeStyle, isDraw);
       });
     }
+    return () => {
+      if (selectedShape?.params.shapeType !== 'draw') return;
+      const canvas = getCanvasEl({ id: selectedShape.id });
+      if (!canvas) return;
+      canvas.removeEventListener('mousedown', () => {});
+      canvas.removeEventListener('mouseup', () => {});
+      canvas.removeEventListener('mousemove', () => {});
+    };
   }, [selectedShape, color]);
 
   return {};
