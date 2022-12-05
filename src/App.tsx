@@ -1,31 +1,26 @@
-import { useContext } from 'react';
-import LoadingScreen from './components/molecules/LoadingScreen';
-import AddedShapes from './components/organisms/AddedShapes';
-import ShapeConfiguration from './components/organisms/ShapeConfiguration';
-import Toolbar from './components/organisms/Toolbar';
-import { BG_CANVAS_ID, canvasSize } from './constants';
-import ShapeContext from './context/ShapeContext';
+import { useState } from 'react';
+import Drawer from './pages/Drawer';
+import NestedComments from './pages/NestedComment';
 
 export default function App() {
-  const { selectedShape } = useContext(ShapeContext);
+  const [whichPage, setWhichPage] = useState<'comments' | 'draw'>('draw');
 
   return (
-    <div className="relative hidden h-screen items-center justify-center lg:flex">
-      <LoadingScreen />
-      <Toolbar />
-      <div
-        id="parentElement"
-        className={`relative overflow-hidden rounded-lg bg-neutral-content shadow-xl`}
-        style={{ width: canvasSize.width, height: canvasSize.height }}
-      >
-        <canvas
-          id={BG_CANVAS_ID}
-          height={canvasSize.height}
-          width={canvasSize.width}
-        />
+    <div>
+      <div className="w-full bg-secondary p-1 text-center">
+        <button
+          className="btn-primary btn-sm btn"
+          onClick={() =>
+            setWhichPage((prev) => {
+              return prev === 'comments' ? 'draw' : 'comments';
+            })
+          }
+        >
+          Change to {whichPage === 'comments' ? 'Drawer' : 'Nested Comments'}
+        </button>
       </div>
-      <AddedShapes />
-      {selectedShape ? <ShapeConfiguration /> : null}
+      {whichPage === 'draw' && <Drawer />}
+      {whichPage === 'comments' && <NestedComments />}
     </div>
   );
 }
