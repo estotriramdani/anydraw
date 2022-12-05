@@ -114,14 +114,14 @@ const comments: IComment[] = [
   },
 ];
 
-// const renderComment = (comment: IComment, level: number): any => {
-//   return comment?.comments?.map((comm, index) => {
-//     if (comm.comments.length !== 0) {
-//       return <CardNested comment={comm} level={level + index + 1} />;
-//     }
-//     return <CardNested comment={comm} level={level + 1} />;
-//   });
-// };
+const renderComment = (comment: IComment, level: number): any => {
+  return comment?.comments?.map((comm, index) => {
+    if (comm.comments.length !== 0) {
+      return <CardNested comment={comm} level={level + index + 1} />;
+    }
+    return <CardNested comment={comm} level={level + 1} />;
+  });
+};
 
 const CardNested = ({ comment, level }: { comment: IComment; level: number }) => {
   // const children = comment?.comments?.map((comm, index) => {
@@ -140,12 +140,7 @@ const CardNested = ({ comment, level }: { comment: IComment; level: number }) =>
         <p>id: {comment.id}</p>
         <p>Level: {level}</p>
       </div>
-      {comment?.comments?.map((comm, index) => {
-        if (comm.comments.length !== 0) {
-          return <CardNested comment={comm} level={level + index + 1} />;
-        }
-        return <CardNested comment={comm} level={level + 1} />;
-      })}
+      {renderComment(comment, level)}
     </div>
   );
 };
