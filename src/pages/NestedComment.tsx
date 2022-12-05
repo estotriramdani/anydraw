@@ -114,16 +114,23 @@ const comments: IComment[] = [
   },
 ];
 
-const renderComment = (comment: IComment, level: number): any => {
-  return comment?.comments?.map((comm, index) => {
-    if (comm.comments.length !== 0) {
-      return <CardNested comment={comm} level={level + index + 1} />;
-    }
-    return <CardNested comment={comm} level={level + 1} />;
-  });
-};
+// const renderComment = (comment: IComment, level: number): any => {
+//   return comment?.comments?.map((comm, index) => {
+//     if (comm.comments.length !== 0) {
+//       return <CardNested comment={comm} level={level + index + 1} />;
+//     }
+//     return <CardNested comment={comm} level={level + 1} />;
+//   });
+// };
 
 const CardNested = ({ comment, level }: { comment: IComment; level: number }) => {
+  // const children = comment?.comments?.map((comm, index) => {
+  //   if (comm.comments.length !== 0) {
+  //     return <CardNested comment={comm} level={level + index + 1} />;
+  //   }
+  //   return <CardNested comment={comm} level={level + 1} />;
+  // });
+
   return (
     <div>
       <div className="mb-2 border p-3" style={{ marginLeft: `${level * 20}px` }}>
@@ -133,7 +140,12 @@ const CardNested = ({ comment, level }: { comment: IComment; level: number }) =>
         <p>id: {comment.id}</p>
         <p>Level: {level}</p>
       </div>
-      {renderComment(comment, level)}
+      {comment?.comments?.map((comm, index) => {
+        if (comm.comments.length !== 0) {
+          return <CardNested comment={comm} level={level + index + 1} />;
+        }
+        return <CardNested comment={comm} level={level + 1} />;
+      })}
     </div>
   );
 };
